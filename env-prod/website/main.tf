@@ -5,13 +5,12 @@ provider "aws" {
 }
 
 terraform {
-  backend "s3" {
-    acl     = "private"
-    bucket  = "vladholubiev-tf-state"
-    key     = "env-prod/website/main.tfstate"
-    encrypt = "true"
-    region  = "eu-central-1"
-    profile = "vlad"
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "VladHolubiev"
+
+    workspaces {
+      name = "website"
+    }
   }
 }
-
