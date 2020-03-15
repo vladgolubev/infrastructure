@@ -1,24 +1,25 @@
 provider "aws" {
   region  = "eu-central-1"
-  version = "~> 1.23"
+  version = "~> 2.3"
   profile = "vlad"
 }
 
-provider "aws.us_east_1" {
+provider "aws" {
   region  = "us-east-1"
-  version = "~> 1.23"
+  alias   = "us_east_1"
+  version = "~> 2.3"
   profile = "vlad"
 }
 
 resource "aws_s3_bucket" "vladholubiev_tf_state" {
   bucket   = "vladholubiev-tf-state"
-  provider = "aws"
+  provider = aws
 
   lifecycle {
     prevent_destroy = true
   }
 
-  tags {
+  tags = {
     Terraform = true
   }
 
@@ -30,9 +31,9 @@ resource "aws_s3_bucket" "vladholubiev_tf_state" {
 resource "aws_s3_bucket" "vladholubiev_sls" {
   bucket   = "vladholubiev-serverless"
   region   = "us-east-1"
-  provider = "aws.us_east_1"
+  provider = aws.us_east_1
 
-  tags {
+  tags = {
     Terraform = true
   }
 
@@ -51,3 +52,4 @@ terraform {
     profile = "vlad"
   }
 }
+

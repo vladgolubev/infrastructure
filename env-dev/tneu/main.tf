@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "us-east-1"
-  version = "~> 1.37"
+  version = "~> 2.3"
   profile = "vlad"
 }
 
@@ -14,3 +14,4 @@ terraform {
     profile = "vlad"
   }
 }
+

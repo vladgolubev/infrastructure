@@ -9,11 +9,11 @@ resource "aws_cloudfront_origin_access_identity" "tneu_scores" {
 
 resource "aws_cloudfront_distribution" "tneu_scores" {
   origin {
-    domain_name = "${aws_route53_record.tneu_droplet.name}"
+    domain_name = aws_route53_record.tneu_droplet.name
     origin_id   = "Scores-${aws_route53_record.tneu_droplet.name}"
 
     custom_origin_config {
-      http_port                = "${var.droplet_port}"
+      http_port                = var.droplet_port
       https_port               = 443
       origin_protocol_policy   = "http-only"
       origin_keepalive_timeout = 5
@@ -23,11 +23,11 @@ resource "aws_cloudfront_distribution" "tneu_scores" {
   }
 
   origin {
-    domain_name = "${aws_route53_record.tneu_droplet.name}"
+    domain_name = aws_route53_record.tneu_droplet.name
     origin_id   = "News-${aws_route53_record.tneu_droplet.name}"
 
     custom_origin_config {
-      http_port                = "${var.droplet_port_news}"
+      http_port                = var.droplet_port_news
       https_port               = 443
       origin_protocol_policy   = "http-only"
       origin_keepalive_timeout = 5
@@ -230,14 +230,14 @@ resource "aws_cloudfront_distribution" "tneu_scores" {
     }
   }
 
-  tags {
-    Environment = "${var.env}"
+  tags = {
+    Environment = var.env
     Terraform   = true
   }
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = "${data.aws_acm_certificate.prod.arn}"
+    acm_certificate_arn            = data.aws_acm_certificate.prod.arn
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1"
   }
@@ -251,3 +251,4 @@ resource "aws_cloudfront_distribution" "tneu_scores" {
 data "aws_acm_certificate" "prod" {
   domain = "*.${var.domain}"
 }
+

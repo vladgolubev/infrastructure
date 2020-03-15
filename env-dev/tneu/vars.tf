@@ -25,3 +25,4 @@ variable "droplet_port" {
 variable "droplet_port_news" {
   default = "9191"
 }
+

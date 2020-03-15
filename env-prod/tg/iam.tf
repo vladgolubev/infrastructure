@@ -5,9 +5,9 @@ resource "aws_iam_user" "ci_tg" {
 
 resource "aws_iam_user_policy" "ci_tg" {
   name = "ci_tg"
-  user = "${aws_iam_user.ci_tg.name}"
+  user = aws_iam_user.ci_tg.name
 
-  policy = "${data.aws_iam_policy_document.ci_tg.json}"
+  policy = data.aws_iam_policy_document.ci_tg.json
 }
 
 data "aws_iam_policy_document" "ci_tg" {
@@ -29,3 +29,4 @@ data "aws_iam_policy_document" "ci_tg" {
     ]
   }
 }
+

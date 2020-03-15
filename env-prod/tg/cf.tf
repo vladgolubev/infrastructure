@@ -9,7 +9,7 @@ resource "aws_cloudfront_origin_access_identity" "main" {
 
 resource "aws_cloudfront_distribution" "main" {
   origin {
-    domain_name = "${aws_s3_bucket.main.website_endpoint}"
+    domain_name = aws_s3_bucket.main.website_endpoint
     origin_id   = "S3-Website-${aws_s3_bucket.main.bucket_domain_name}"
 
     custom_origin_config {
@@ -64,8 +64,8 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  tags {
-    Environment = "${var.env}"
+  tags = {
+    Environment = var.env
     Terraform   = true
   }
 
@@ -78,3 +78,4 @@ resource "aws_cloudfront_distribution" "main" {
     create_before_destroy = true
   }
 }
+
