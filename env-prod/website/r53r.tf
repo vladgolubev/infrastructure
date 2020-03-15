@@ -35,6 +35,18 @@ resource "aws_route53_record" "vladholubiev_com_A" {
   }
 }
 
+resource "aws_route53_record" "blog_vladholubiev_com_A" {
+  zone_id = aws_route53_zone.vladholubiev_com.zone_id
+  name    = "blog.${var.domain}"
+  type    = "A"
+
+  alias {
+    name                   = aws_s3_bucket.blog_vladholubiev_com.website_domain
+    zone_id                = aws_s3_bucket.blog_vladholubiev_com.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
 resource "aws_route53_record" "www_vladholubiev_com_A" {
   zone_id = aws_route53_zone.vladholubiev_com.zone_id
   name    = "www.${var.domain}"

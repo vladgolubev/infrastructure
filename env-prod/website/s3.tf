@@ -28,6 +28,20 @@ resource "aws_s3_bucket" "vladholubiev_com" {
   }
 }
 
+resource "aws_s3_bucket" "blog_vladholubiev_com" {
+  bucket = "blog.${var.domain}"
+  acl    = "public-read"
+
+  website {
+    redirect_all_requests_to = "https://medium.com/@vladholubiev"
+  }
+
+  tags = {
+    Terraform   = true
+    Environment = var.env
+  }
+}
+
 resource "aws_s3_bucket_policy" "allow_public_read" {
   bucket = aws_s3_bucket.vladholubiev_com.id
   policy = data.aws_iam_policy_document.allow_public_read.json
