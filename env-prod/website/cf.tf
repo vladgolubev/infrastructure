@@ -1,5 +1,5 @@
 resource "aws_cloudfront_origin_access_identity" "prod" {
-  comment = "${var.domain}"
+  comment = var.domain
 
   lifecycle {
     prevent_destroy       = true
@@ -9,7 +9,7 @@ resource "aws_cloudfront_origin_access_identity" "prod" {
 
 resource "aws_cloudfront_distribution" "prod" {
   origin {
-    domain_name = "${aws_s3_bucket.vladholubiev_com.website_endpoint}"
+    domain_name = aws_s3_bucket.vladholubiev_com.website_endpoint
     origin_id   = "S3-Website-${aws_s3_bucket.vladholubiev_com.bucket_domain_name}"
 
     custom_origin_config {
@@ -24,11 +24,11 @@ resource "aws_cloudfront_distribution" "prod" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "${var.domain}"
+  comment             = var.domain
   default_root_object = "index.html"
 
   aliases = [
-    "${var.domain}",
+    var.domain,
   ]
 
   default_cache_behavior {
@@ -68,14 +68,14 @@ resource "aws_cloudfront_distribution" "prod" {
     }
   }
 
-  tags {
-    Environment = "${var.env}"
+  tags = {
+    Environment = var.env
     Terraform   = true
   }
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = "${data.aws_acm_certificate.prod.arn}"
+    acm_certificate_arn            = data.aws_acm_certificate.prod.arn
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = "TLSv1"
   }

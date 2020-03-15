@@ -2,7 +2,7 @@ resource "aws_route53_zone" "vladholubiev_com" {
   name    = "${var.domain}."
   comment = ""
 
-  tags {
+  tags = {
     Terraform = true
   }
 

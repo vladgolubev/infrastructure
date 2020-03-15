@@ -1,6 +1,6 @@
 resource "aws_route53_record" "vladholubiev_com_NS" {
-  zone_id = "${aws_route53_zone.vladholubiev_com.zone_id}"
-  name    = "${var.domain}"
+  zone_id = aws_route53_zone.vladholubiev_com.zone_id
+  name    = var.domain
   type    = "NS"
   ttl     = "172800"
 
@@ -13,8 +13,8 @@ resource "aws_route53_record" "vladholubiev_com_NS" {
 }
 
 resource "aws_route53_record" "vladholubiev_com_SOA" {
-  zone_id = "${aws_route53_zone.vladholubiev_com.zone_id}"
-  name    = "${var.domain}"
+  zone_id = aws_route53_zone.vladholubiev_com.zone_id
+  name    = var.domain
   type    = "SOA"
   ttl     = "900"
 
@@ -24,25 +24,25 @@ resource "aws_route53_record" "vladholubiev_com_SOA" {
 }
 
 resource "aws_route53_record" "vladholubiev_com_A" {
-  zone_id = "${aws_route53_zone.vladholubiev_com.zone_id}"
-  name    = "${var.domain}"
+  zone_id = aws_route53_zone.vladholubiev_com.zone_id
+  name    = var.domain
   type    = "A"
 
   alias {
-    name                   = "${aws_cloudfront_distribution.prod.domain_name}"
-    zone_id                = "${aws_cloudfront_distribution.prod.hosted_zone_id}"
+    name                   = aws_cloudfront_distribution.prod.domain_name
+    zone_id                = aws_cloudfront_distribution.prod.hosted_zone_id
     evaluate_target_health = false
   }
 }
 
 resource "aws_route53_record" "www_vladholubiev_com_A" {
-  zone_id = "${aws_route53_zone.vladholubiev_com.zone_id}"
+  zone_id = aws_route53_zone.vladholubiev_com.zone_id
   name    = "www.${var.domain}"
   type    = "A"
 
   alias {
-    name                   = "${aws_cloudfront_distribution.prod.domain_name}"
-    zone_id                = "${aws_cloudfront_distribution.prod.hosted_zone_id}"
+    name                   = aws_cloudfront_distribution.prod.domain_name
+    zone_id                = aws_cloudfront_distribution.prod.hosted_zone_id
     evaluate_target_health = false
   }
 }
