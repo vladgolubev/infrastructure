@@ -1,13 +1,13 @@
 provider "aws" {
   region  = "eu-central-1"
-  version = "~> 2.3"
+  version = "~> 3.0"
   profile = "vlad"
 }
 
 provider "aws" {
   region  = "us-east-1"
   alias   = "us_east_1"
-  version = "~> 2.3"
+  version = "~> 3.0"
   profile = "vlad"
 }
 
